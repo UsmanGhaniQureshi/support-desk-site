@@ -1,17 +1,27 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { register } from "../store/auth/authSlice";
+import { register, reset } from "../store/auth/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const { isSuccessFull, isError, isLoading, user } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const emailRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+
+  useEffect(() => {
+    dispatch(reset());
+    if (isSuccessFull || user) {
+      navigate("/");
+    }
+  }, [user, isError, isSuccessFull, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();

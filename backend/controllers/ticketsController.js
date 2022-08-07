@@ -7,24 +7,23 @@ const getTickets = asyncHanlder(async (req, res) => {
   res.json(tickets);
 });
 
-//getting All tickets
+//getting a Single ticket
 const getSingleTicket = asyncHanlder(async (req, res) => {
-  res.json({
-    message: "Getting Single Ticket " + req.params.id,
-  });
+  const ticket = await Ticket.findById(req.params.id);
+  res.json(ticket);
 });
 
 // Creating A new Ticket
 const createTicket = asyncHanlder(async (req, res) => {
-    let ticket;
+  let ticket;
   if (req.body) {
-    if (!req.body.text) {
+    if (!req.body.product) {
       throw Error("You Need to Add Name Field");
     }
 
-    const { text } = req.body;
+    const { name, email, product, comment } = req.body;
 
-    ticket = await Ticket.create({ text });
+    ticket = await Ticket.create({ name, email, product, comment });
   }
 
   res.json(ticket);
@@ -43,6 +42,7 @@ const deleteTicket = asyncHanlder(async (req, res) => {
     message: "Delete Ticket " + req.params.id,
   });
 });
+
 module.exports = {
   getTickets,
   getSingleTicket,

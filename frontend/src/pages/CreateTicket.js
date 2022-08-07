@@ -1,18 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { FaArrowLeft, FaCheck } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createTicket } from "../store/tickets/ticketSlice";
 
 const CreateTicket = () => {
+  const { isError, isSuccessFull, user, isLoading } = useSelector(
+    (state) => state.auth
+  );
+
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [product, setProduct] = useState("iPhone");
   const commentRef = useRef();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setName("Usman Ghani Qureshi");
-    setEmail("musmanghaniqureshi2000@gmail.com");
-  }, []);
+    if (isSuccessFull || user) {
+      const { email, name } = JSON.parse(user);
+      setEmail(email);
+      setName(name);
+    }
+    if (!isSuccessFull && !user) {
+      navigate("/login");
+    }
+  }, [isError, isSuccessFull, isLoading, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -22,15 +35,12 @@ const CreateTicket = () => {
       email,
       product,
       comment: commentRef.current.value,
-      createdOn:
-        new Date().toLocaleDateString() +
-        ", " +
-        new Date().toLocaleTimeString(),
     };
-
+    dispatch(createTicket(formData));
     navigate("/tickets");
-    console.log(formData);
   };
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <>
       <button

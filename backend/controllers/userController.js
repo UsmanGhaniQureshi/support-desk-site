@@ -8,14 +8,10 @@ const jwt = require("jsonwebtoken");
 const userRegister = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  console.log("Working");
-  // Checking fields are empty or not
-
   if (name === "" || email === "" || password === "") {
     throw new Error("Kindly fill all the required fields");
   }
 
-  // check User Exist
   const userExist = await User.findOne({
     email,
   });
@@ -24,21 +20,15 @@ const userRegister = asyncHandler(async (req, res) => {
     throw new Error("User Already Exist");
   }
 
-  // Hashing Password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Create a New User in the database
   const newUser = await User.create({
     name,
     email,
     password: hashedPassword,
   });
 
-  console.log(newUser);
-
-  // send Back the created User
-
-  res.send({ ...newUser, token: generateJWT(newUser._id) });
+  res.json({ ...newUser, token: generateJWT(newUser._id) });
 });
 
 // ========================== Login User ===================================
@@ -46,18 +36,22 @@ const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // check first user exist or not
-  const userExist = await User.findOne({
+  const user = await User.findOne({
     email,
   });
 
   // if user exist then we have to check password matched with the hashed one or not
-  if (userExist) {
-    if (await bcrypt.compare(password, userExist.password)) {
-      const token = generateJWT(userExist._id);
-      res.json(token);
-    }
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateJWT(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid credentials");
   }
-  throw new Error("Invalid Email Or Password");
 });
 
 const generateJWT = (id) => {

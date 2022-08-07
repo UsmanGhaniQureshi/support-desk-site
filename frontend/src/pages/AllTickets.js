@@ -2,17 +2,19 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import TableRow from "../components/TableRow";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTickets } from "../store/tickets/ticketSlice";
+
 const AllTickets = () => {
   const navigate = useNavigate();
 
-  const tickets = [
-    { product: "MacBook", status: "new", id: 1 },
-    { product: "Iphone", status: "new", id: 2 },
-    { product: "Samsung", status: "closed", id: 3 },
-    { product: "MacBook", status: "new", id: 4 },
-    { product: "MacBook", status: "closed", id: 5 },
-    { product: "MacBook", status: "closed", id: 6 },
-  ];
+  const dispatch = useDispatch();
+  const { tickets } = useSelector((state) => state.ticket);
+
+  useEffect(() => {
+    dispatch(getTickets());
+  }, []);
 
   return (
     <div>
@@ -35,7 +37,7 @@ const AllTickets = () => {
         </thead>
         <tbody>
           {tickets.map((item) => (
-            <TableRow key={item.id} item={item} />
+            <TableRow key={item._id} item={item} />
           ))}
         </tbody>
       </table>

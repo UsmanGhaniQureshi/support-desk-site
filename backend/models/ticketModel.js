@@ -2,14 +2,25 @@ const mongoose = require("mongoose");
 
 const ticketSchema = mongoose.Schema(
   {
-    text: {
+    name: {
       type: String,
       required: [true, "Must Required This"],
     },
-
-    createdBy: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "User",
+    email: {
+      type: String,
+      required: [true, "Must Required This"],
+    },
+    product: {
+      type: String,
+      required: [true, "Must Required This"],
+    },
+    comment: {
+      type: String,
+      required: [true, "Must Required This"],
+    },
+    comment: {
+      type: String,
+      default: "new",
     },
   },
   {

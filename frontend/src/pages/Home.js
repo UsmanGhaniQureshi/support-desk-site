@@ -1,5 +1,6 @@
 import LinkButton from "../components/LinkButton";
 import { FaQuestionCircle } from "react-icons/fa";
+
 const Home = () => {
   return (
     <div className="w-full">

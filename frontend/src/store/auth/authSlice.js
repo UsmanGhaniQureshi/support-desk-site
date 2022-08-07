@@ -27,8 +27,9 @@ export const login = createAsyncThunk(
   "/auth/login",
   async (userData, thunkApi) => {
     try {
-      const response = await axios.post("/api/user/register", userData);
-      localStorage.setItem("user", response.data);
+      const response = await axios.post("/api/user/login", userData);
+      if (response.data)
+        localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -37,7 +38,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("/auth/logout", async () => {
-  localStorage.removeItem("user");
+  await localStorage.removeItem("user");
 });
 const authSlice = createSlice({
   name: "auth",

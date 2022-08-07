@@ -13,12 +13,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && isSuccessFull) {
+    if (user || isSuccessFull) {
       navigate("/");
     }
-
     dispatch(reset());
-  }, [user, navigate]);
+  }, [user, isSuccessFull, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

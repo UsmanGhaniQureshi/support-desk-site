@@ -5,7 +5,6 @@ const asyncHandler = require("express-async-handler");
 const auth = asyncHandler(async (req, res, next) => {
   const headers = req.headers.authorization;
   let token;
-  console.log(headers)
 
   if (headers) {
     token = headers.split(" ")[1];
