@@ -11,7 +11,7 @@ const noteSchema = mongoose.Schema(
       ref: "Ticket",
       required: true,
     },
-    noteText: {
+    noteBy: {
       type: String,
       required: true,
     },

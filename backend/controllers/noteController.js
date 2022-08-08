@@ -1,27 +1,28 @@
 const asyncHandler = require("express-async-handler");
 const Note = require("../models/noteModel");
 
-// Getting a Single Note
-const getSingleNote = asyncHandler(async (req, res) => {
-  const note = await Note.findById(req.params.id);
+// Getting all notes of a Single Ticket
+const getAllNotesOfATicket = asyncHandler(async (req, res) => {
+  const note = await Note.find({
+    ticketID: req.params.ticketID,
+  });
   res.json(note);
 });
 
 // Creating A New Note
-const createNote = async (req, res) => {
-  let newTicket;
+const createNote = asyncHandler(async (req, res) => {
+  let note;
+
   try {
-    newTicket = await Note.create({
-      ...req.body,
-    });
+    note = await Note.create(req.body);
   } catch (error) {
     res.json(error);
   }
-  res.json(newTicket);
-};
+  res.json(note);
+});
 
 // Updating the existing Note
-const updateNote = async (req, res) => {
+const updateNote = asyncHandler(async (req, res) => {
   const noteExist = await Note.findOne({
     _id: req.params.id,
   });
@@ -35,11 +36,11 @@ const updateNote = async (req, res) => {
       message: "Note not exist",
     });
   }
-};
+});
 
 // Deleting A Single Note
 
-const deleteNote = async (req, res) => {
+const deleteNote = asyncHandler(async (req, res) => {
   await Note.deleteOne({
     _id: req.params.id,
   });
@@ -47,10 +48,10 @@ const deleteNote = async (req, res) => {
   res.json({
     message: "Note Deleted SuccessFully",
   });
-};
+});
 
 module.exports = {
-  getSingleNote,
+  getAllNotesOfATicket,
   createNote,
   updateNote,
   deleteNote,

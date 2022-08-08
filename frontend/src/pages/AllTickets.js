@@ -10,12 +10,12 @@ const AllTickets = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { tickets } = useSelector((state) => state.ticket);
+  const { tickets, isLoading } = useSelector((state) => state.ticket);
 
   useEffect(() => {
     dispatch(getTickets());
   }, []);
-
+  if (isLoading) return <p>Loading...</p>;
   return (
     <div>
       <button

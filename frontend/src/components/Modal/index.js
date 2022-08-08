@@ -6,9 +6,7 @@ const Modal = ({ onAddNote, onClose }) => {
   const noteRef = useRef();
   const submitHandler = (e) => {
     e.preventDefault();
-
     const note = noteRef.current.value;
-
     onAddNote(note);
   };
 
