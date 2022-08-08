@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 import Note from "../components/Note";
 import { addNote, fetchNotes } from "../store/notes/notesSlice";
-import { getSingleTicket } from "../store/tickets/ticketSlice";
+import {
+  closeTicket,
+  getSingleTicket,
+  reset,
+} from "../store/tickets/ticketSlice";
 
 const TicketDetail = () => {
   const { ticket } = useSelector((state) => state.ticket);
@@ -19,9 +23,10 @@ const TicketDetail = () => {
   const { ticketID } = useParams();
 
   useEffect(() => {
+    dispatch(reset);
     dispatch(getSingleTicket(ticketID));
     dispatch(fetchNotes(ticketID));
-  }, [ticketID]);
+  }, [ticketID, dispatch]);
 
   const addNoteHandler = (note) => {
     const { name } = JSON.parse(user);
@@ -33,6 +38,12 @@ const TicketDetail = () => {
     dispatch(addNote(data));
     setIsModalOpen(false);
   };
+
+  const closeTicketHandler = () => {
+    dispatch(closeTicket(ticketID));
+    navigate("/tickets");
+  };
+
   if (!ticket) return <p>Loading...</p>;
   return (
     <div>
@@ -66,7 +77,10 @@ const TicketDetail = () => {
       {notes.map((note) => (
         <Note key={note._id} note={note} />
       ))}
-      <button className="w-full text-center mt-8 border-black text-white bg-red-900  items-center border px-5 font-bold py-1 text-sm rounded-md">
+      <button
+        onClick={closeTicketHandler}
+        className="w-full text-center mt-8 border-black text-white bg-red-900  items-center border px-5 font-bold py-1 text-sm rounded-md"
+      >
         Close Ticket
       </button>
 

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const TableRow = ({ item }) => {
   return (
-    <tr className="border-b">
+    <tr className="border-b hover:bg-slate-100 transition-all duration-200">
       <td className="px-6 py-4">{item.createdAt}</td>
       <td className="px-6 py-4">{item.product}</td>
       <td className="px-6 py-4">

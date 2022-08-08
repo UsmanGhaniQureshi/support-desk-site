@@ -4,7 +4,7 @@ import TableRow from "../components/TableRow";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getTickets } from "../store/tickets/ticketSlice";
+import { getTickets, reset } from "../store/tickets/ticketSlice";
 
 const AllTickets = () => {
   const navigate = useNavigate();
@@ -13,8 +13,9 @@ const AllTickets = () => {
   const { tickets, isLoading } = useSelector((state) => state.ticket);
 
   useEffect(() => {
+    dispatch(reset());
     dispatch(getTickets());
-  }, []);
+  }, [dispatch]);
   if (isLoading) return <p>Loading...</p>;
   return (
     <div>

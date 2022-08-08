@@ -58,7 +58,7 @@ const deleteTicket = asyncHanlder(async (req, res) => {
 // Closing the Ticket
 const closeTicket = asyncHanlder(async (req, res) => {
   let closedTicket;
-
+  console.log("action callled");
   try {
     closedTicket = await Ticket.findByIdAndUpdate(
       req.params.id,
@@ -80,4 +80,5 @@ module.exports = {
   createTicket,
   updateTicket,
   deleteTicket,
+  closeTicket,
 };

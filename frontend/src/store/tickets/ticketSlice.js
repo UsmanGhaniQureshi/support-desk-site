@@ -46,6 +46,18 @@ export const createTicket = createAsyncThunk(
   }
 );
 
+export const closeTicket = createAsyncThunk(
+  "tickets/closing",
+  async (id, thunkiApi) => {
+    try {
+      const ticket = await axios.put("/api/tickets/close/" + id);
+      return ticket.data;
+    } catch (error) {
+      return thunkiApi.rejectWithValue(error);
+    }
+  }
+);
+
 const ticketSlice = createSlice({
   name: "ticket",
   initialState,
@@ -88,6 +100,13 @@ const ticketSlice = createSlice({
         state.isLoading = false;
         state.isSuccessFull = true;
         state.ticket = action.payload;
+      })
+      .addCase(closeTicket.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccessFull = true;
+        state.tickets.map((t) =>
+          t._id === action.payload._id ? action.payload : t
+        );
       });
   },
 });
