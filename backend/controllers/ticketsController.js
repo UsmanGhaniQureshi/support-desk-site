@@ -31,16 +31,47 @@ const createTicket = asyncHanlder(async (req, res) => {
 
 // Update Ticket
 const updateTicket = asyncHanlder(async (req, res) => {
-  res.json({
-    message: "Update Ticket " + req.params.id,
-  });
+  let updatedTicket;
+  try {
+    updatedTicket = await Ticket.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...req.body,
+      },
+      { new: true }
+    );
+  } catch (error) {
+    res.json(error);
+  }
+
+  res.json(updatedTicket);
 });
 
 // Delete Ticket
 const deleteTicket = asyncHanlder(async (req, res) => {
-  res.json({
-    message: "Delete Ticket " + req.params.id,
+  await Ticket.deleteOne({
+    _id: req.params.id,
   });
+  res.json({ message: "Ticket Deleted Successfully" });
+});
+
+// Closing the Ticket
+const closeTicket = asyncHanlder(async (req, res) => {
+  let closedTicket;
+
+  try {
+    closedTicket = await Ticket.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: "closed",
+      },
+      { new: true }
+    );
+  } catch (error) {
+    res.json(error);
+  }
+
+  res.json(closeTicket);
 });
 
 module.exports = {

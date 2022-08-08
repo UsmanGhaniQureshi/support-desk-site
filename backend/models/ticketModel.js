@@ -18,7 +18,7 @@ const ticketSchema = mongoose.Schema(
       type: String,
       required: [true, "Must Required This"],
     },
-    comment: {
+    status: {
       type: String,
       default: "new",
     },
