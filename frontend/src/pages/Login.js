@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FiLogIn } from "react-icons/fi";
+import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../store/auth/authSlice";
@@ -36,7 +36,7 @@ const Login = () => {
     <div className="w-3/4 mx-auto">
       <div className="p-4">
         <h1 className="flex items-center justify-center text-4xl font-bold">
-          <FiLogIn className="mx-2" />
+          <FaSignInAlt className="mx-2" />
           Login
         </h1>
         <p className="text-2xl text-zinc-500  text-center mt-3  font-extrabold ">

@@ -1,5 +1,5 @@
 import LinkButton from "../components/LinkButton";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaQuestionCircle, FaTicketAlt } from "react-icons/fa";
 
 const Home = () => {
   return (
@@ -23,7 +23,7 @@ const Home = () => {
           url="tickets"
           className="border-2 rounded-sm py-1  text-xs font-bold"
         >
-          <FaQuestionCircle />
+          <FaTicketAlt />
         </LinkButton>
       </div>
     </div>

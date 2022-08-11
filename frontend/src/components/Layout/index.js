@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import LinkButton from "../LinkButton";
-import { FaUserAlt } from "react-icons/fa";
-import { FiLogIn } from "react-icons/fi";
+import { FaUserAlt, FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/authSlice";
 
@@ -27,7 +26,7 @@ const Layout = ({ children }) => {
               className="font-bold text-xs"
               linkText="Register"
             >
-              <FiLogIn />
+              <FaSignInAlt />
             </LinkButton>
           </div>
         )}
