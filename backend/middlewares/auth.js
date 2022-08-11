@@ -7,15 +7,20 @@ const auth = asyncHandler(async (req, res, next) => {
   let token;
 
   if (headers) {
-    token = headers.split(" ")[1];
+    try {
+      token = headers.split(" ")[1];
 
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
 
-    req.user = await User.findById(decoded.id).select("-password");
+      req.user = await User.findById(decoded.id).select("-password");
+    } catch (error) {
+      throw new Error("Not Authorized");
+    }
+
     next();
   }
 
-  if (!token) throw new Error("Not A valid User");
+  if (!token) throw new Error("Not Authorized");
 });
 
 module.exports = { auth };

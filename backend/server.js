@@ -12,8 +12,8 @@ connectToDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/tickets", require("./routes/ticketRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/tickets", require("./routes/ticketRoutes"));
 app.use("/api/notes", require("./routes/noteRoutes"));
 
 app.use(errorHandler);

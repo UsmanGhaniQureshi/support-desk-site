@@ -28,12 +28,21 @@ const userRegister = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  res.json({ ...newUser, token: generateJWT(newUser._id) });
+  res.json({
+    _id: newUser._id,
+    name: newUser.name,
+    email: newUser.email,
+    token: generateJWT(newUser._id),
+  });
 });
 
 // ========================== Login User ===================================
 const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
+  if (email === "" || password === "") {
+    throw new Error("Kindly Fill all the fields");
+  }
 
   // check first user exist or not
   const user = await User.findOne({
