@@ -8,7 +8,7 @@ import { addNote, fetchNotes } from "../store/notes/notesSlice";
 import {
   closeTicket,
   getSingleTicket,
-  reset,
+  resetTicketDetail,
 } from "../store/tickets/ticketSlice";
 
 const TicketDetail = () => {
@@ -23,13 +23,15 @@ const TicketDetail = () => {
   const { ticketID } = useParams();
 
   useEffect(() => {
-    dispatch(reset);
+    if (!user) navigate("/");
+    
+    dispatch(resetTicketDetail());
     dispatch(getSingleTicket(ticketID));
     dispatch(fetchNotes(ticketID));
   }, [ticketID, dispatch]);
 
   const addNoteHandler = (note) => {
-    const { name } = JSON.parse(user);
+    const { name } = user;
     const data = {
       noteText: note,
       noteBy: name,

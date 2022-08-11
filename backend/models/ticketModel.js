@@ -2,17 +2,15 @@ const mongoose = require("mongoose");
 
 const ticketSchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Must Required This"],
-    },
-    email: {
-      type: String,
-      required: [true, "Must Required This"],
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
     },
     product: {
       type: String,
       required: [true, "Must Required This"],
+      enum: ["iphone", "ipad", "macbook", "samsung", "others"],
     },
     comment: {
       type: String,
@@ -20,6 +18,7 @@ const ticketSchema = mongoose.Schema(
     },
     status: {
       type: String,
+      enum: ["new", "closed", "open"],
       default: "new",
     },
   },

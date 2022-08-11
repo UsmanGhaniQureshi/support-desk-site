@@ -2,28 +2,36 @@ import { useEffect, useRef, useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { login, reset } from "../store/auth/authSlice";
 
 const Login = () => {
-  const [message, setMessage] = useState(null);
-  const { user, isSuccessFull } = useSelector((state) => state.auth);
+  const { user, isSuccessFull, isError, message, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
     if (user || isSuccessFull) {
       navigate("/");
     }
     dispatch(reset());
-  }, [user, isSuccessFull, navigate]);
+  }, [user, isSuccessFull, isError, message, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setMessage(null);
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+
+    if (!email || !password) {
+      toast.error("Kindly enter email and password");
+    }
 
     const formData = {
       email,
@@ -32,6 +40,8 @@ const Login = () => {
 
     dispatch(login(formData));
   };
+
+  if (isLoading) return <p>Loading Spinner</p>;
   return (
     <div className="w-3/4 mx-auto">
       <div className="p-4">
@@ -49,6 +59,7 @@ const Login = () => {
       >
         <input
           ref={emailRef}
+          required
           type="email"
           placeholder="Enter Your Email"
           className="border outline-none text-sm px-3 rounded py-1 focus:border-blue-600"
@@ -56,14 +67,12 @@ const Login = () => {
 
         <input
           ref={passwordRef}
+          required
           type="password"
           placeholder="Enter  Password"
           className="border outline-none  text-sm px-3 rounded py-1 focus:border-blue-600"
         />
 
-        {message && (
-          <p className="text-red-600 text-sm uppercase font-bold">{message}</p>
-        )}
         <button
           type="submit"
           className="bg-black text-white py-2 rounded-md text-xs font-bold"

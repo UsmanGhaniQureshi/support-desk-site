@@ -9,12 +9,12 @@ const {
   getSingleTicket,
   updateTicket,
 } = require("../controllers/ticketsController");
-
-router.get("/", getTickets);
-router.get("/:id", getSingleTicket);
-router.post("/", createTicket);
-router.put("/:id", updateTicket);
-router.put("/close/:id", closeTicket);
-router.delete("/:id", deleteTicket);
+const { authMiddleware } = require("../middlewares/auth");
+router.get("/", authMiddleware, getTickets);
+router.get("/:id", authMiddleware, getSingleTicket);
+router.post("/", authMiddleware, createTicket);
+router.put("/:id", authMiddleware, updateTicket);
+router.put("/close/:id", authMiddleware, closeTicket);
+router.delete("/:id", authMiddleware, deleteTicket);
 
 module.exports = router;

@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LinkButton from "../LinkButton";
 import { FaUserAlt, FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/auth/authSlice";
+import { logout, reset } from "../../store/auth/authSlice";
 
 const Layout = ({ children }) => {
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
   const dispatch = useDispatch();
-  if (isLoading) return <p>Loading ....</p>;
   return (
     <div className="w-full md:w-3/5 md:mx-auto">
       <div className="flex justify-between items-center border-b  py-5">
@@ -30,7 +36,7 @@ const Layout = ({ children }) => {
             </LinkButton>
           </div>
         )}
-        {user && <button onClick={() => dispatch(logout())}>Logout</button>}
+        {user && <button onClick={logoutHandler}>Logout</button>}
       </div>
       <div>{children}</div>
     </div>

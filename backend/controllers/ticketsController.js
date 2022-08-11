@@ -1,9 +1,17 @@
 const asyncHanlder = require("express-async-handler");
 const Ticket = require("../models/ticketModel");
+const User = require("../models/userModel");
 
-//getting All tickets
+//getting All User tickets
 const getTickets = asyncHanlder(async (req, res) => {
-  const tickets = await Ticket.find();
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    throw new Error("User Not Exist");
+  }
+  const tickets = await Ticket.find({
+    userId: req.user._id,
+  });
   res.json(tickets);
 });
 
@@ -20,11 +28,20 @@ const createTicket = asyncHanlder(async (req, res) => {
     if (!req.body.product) {
       throw Error("You Need to Add Name Field");
     }
+    const { product, comment } = req.body;
 
-    const { name, email, product, comment } = req.body;
-
-    ticket = await Ticket.create({ name, email, product, comment });
+    try {
+      ticket = await Ticket.create({
+        userId: req.user._id,
+        product,
+        comment,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
+
+  console.log(ticket);
 
   res.json(ticket);
 });
@@ -58,7 +75,6 @@ const deleteTicket = asyncHanlder(async (req, res) => {
 // Closing the Ticket
 const closeTicket = asyncHanlder(async (req, res) => {
   let closedTicket;
-  console.log("action callled");
   try {
     closedTicket = await Ticket.findByIdAndUpdate(
       req.params.id,
@@ -71,7 +87,7 @@ const closeTicket = asyncHanlder(async (req, res) => {
     res.json(error);
   }
 
-  res.json(closeTicket);
+  res.json(closedTicket);
 });
 
 module.exports = {

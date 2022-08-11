@@ -2,37 +2,40 @@ import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { register, reset } from "../store/auth/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { isSuccessFull, isError, isLoading, user } = useSelector(
+  const { isSuccessFull, isError, message, user } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
-  const [message, setMessage] = useState(null);
   const emailRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
   useEffect(() => {
-    dispatch(reset());
+    if (isError) {
+      toast.error(message);
+    }
     if (isSuccessFull || user) {
       navigate("/");
     }
-  }, [user, isError, isSuccessFull, user]);
+
+    dispatch(reset());
+  }, [user, isError, isSuccessFull, user, navigate, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setMessage(null);
     const email = emailRef.current.value;
     const name = nameRef.current.value;
     const password = passwordRef.current.value;
     const cPassword = confirmPasswordRef.current.value;
 
     if (password !== cPassword) {
-      setMessage("Password Not Matched");
+      toast.error("Password Not Matched");
       return;
     }
 
@@ -84,9 +87,7 @@ const Register = () => {
           placeholder="Confirm Password"
           className="border outline-none  text-sm px-3 rounded py-1 focus:border-blue-600"
         />
-        {message && (
-          <p className="text-red-600 text-sm uppercase font-bold">{message}</p>
-        )}
+
         <button
           type="submit"
           className="bg-black text-white py-2 rounded-md text-xs font-bold"

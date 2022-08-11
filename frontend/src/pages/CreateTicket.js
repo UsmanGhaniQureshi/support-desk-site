@@ -12,13 +12,13 @@ const CreateTicket = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [product, setProduct] = useState("iPhone");
+  const [product, setProduct] = useState("iphone");
   const commentRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccessFull || user) {
-      const { email, name } = JSON.parse(user);
+      const { email, name } = user;
       setEmail(email);
       setName(name);
     }
@@ -31,8 +31,6 @@ const CreateTicket = () => {
     e.preventDefault();
 
     const formData = {
-      name,
-      email,
       product,
       comment: commentRef.current.value,
     };
@@ -90,12 +88,11 @@ const CreateTicket = () => {
               onChange={(e) => setProduct(e.target.value)}
               className="bg-slate-800 text-white px-3 "
             >
-              <option value="iPhone">iPhone</option>
-              <option value="macBook">macBook</option>
-              <option value="iMac">iMac</option>
-              <option value="iPad">iPad</option>
-              <option value="Samsung">Samsung</option>
-              <option value="Others">Others</option>
+              <option value="iphone">iPhone</option>
+              <option value="macbook">macBook</option>
+              <option value="ipad">iPad</option>
+              <option value="samsung">Samsung</option>
+              <option value="others">Others</option>
             </select>
           </div>
           <textarea

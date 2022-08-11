@@ -11,11 +11,11 @@ const AllTickets = () => {
 
   const dispatch = useDispatch();
   const { tickets, isLoading } = useSelector((state) => state.ticket);
-
+  const { user, isSuccessFull } = useSelector((state) => state.auth);
   useEffect(() => {
-    dispatch(reset());
+    if (!user && !isSuccessFull) navigate("/login");
     dispatch(getTickets());
-  }, [dispatch]);
+  }, [user, isSuccessFull, navigate, dispatch]);
   if (isLoading) return <p>Loading...</p>;
   return (
     <div>

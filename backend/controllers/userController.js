@@ -19,7 +19,7 @@ const userRegister = asyncHandler(async (req, res) => {
   if (userExist) {
     throw new Error("User Already Exist");
   }
-
+console.log("Callinnnng")
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await User.create({
@@ -39,10 +39,6 @@ const userRegister = asyncHandler(async (req, res) => {
 // ========================== Login User ===================================
 const userLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
-  if (email === "" || password === "") {
-    throw new Error("Kindly Fill all the fields");
-  }
 
   // check first user exist or not
   const user = await User.findOne({
