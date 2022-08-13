@@ -19,7 +19,6 @@ const userRegister = asyncHandler(async (req, res) => {
   if (userExist) {
     throw new Error("User Already Exist");
   }
-console.log("Callinnnng")
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await User.create({

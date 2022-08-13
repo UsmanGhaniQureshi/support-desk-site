@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 import Modal from "../components/Modal";
 import Note from "../components/Note";
 import { addNote, fetchNotes } from "../store/notes/notesSlice";
@@ -24,7 +25,7 @@ const TicketDetail = () => {
 
   useEffect(() => {
     if (!user) navigate("/");
-    
+
     dispatch(resetTicketDetail());
     dispatch(getSingleTicket(ticketID));
     dispatch(fetchNotes(ticketID));
@@ -46,7 +47,7 @@ const TicketDetail = () => {
     navigate("/tickets");
   };
 
-  if (!ticket) return <p>Loading...</p>;
+  if (!ticket || notes.length < 0) return <LoadingSpinner />;
   return (
     <div>
       <button
@@ -57,8 +58,14 @@ const TicketDetail = () => {
         <span>Back</span>
       </button>
       <div className="mt-4 font-bold">
-        <p>{ticket._id}</p>
-        <p>Date Submited :{ticket.createdAt}</p>
+        <p>Ticket ID :{ticket._id}</p>
+        <p>
+          Date Submited :
+          {" " +
+            new Date(ticket.createdAt).toLocaleDateString() +
+            " " +
+            new Date(ticket.createdAt).toLocaleTimeString()}
+        </p>
         <p>Product : {ticket.product}</p>
         <div className="w-full border mt-2 border-slate-800" />
       </div>
@@ -80,6 +87,7 @@ const TicketDetail = () => {
         <Note key={note._id} note={note} />
       ))}
       <button
+        disabled={ticket.status === "closed" ? true : false}
         onClick={closeTicketHandler}
         className="w-full text-center mt-8 border-black text-white bg-red-900  items-center border px-5 font-bold py-1 text-sm rounded-md"
       >

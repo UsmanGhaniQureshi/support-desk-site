@@ -3,6 +3,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { login, reset } from "../store/auth/authSlice";
 
 const Login = () => {
@@ -41,7 +42,7 @@ const Login = () => {
     dispatch(login(formData));
   };
 
-  if (isLoading) return <p>Loading Spinner</p>;
+  if (isLoading) return <LoadingSpinner />;
   return (
     <div className="w-3/4 mx-auto">
       <div className="p-4">

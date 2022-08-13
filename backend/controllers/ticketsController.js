@@ -23,6 +23,9 @@ const getSingleTicket = asyncHanlder(async (req, res) => {
 
 // Creating A new Ticket
 const createTicket = asyncHanlder(async (req, res) => {
+  const userExist = await User.findById(req.user._id);
+
+  if (!userExist) throw new Error("User not exist ");
   let ticket;
   if (req.body) {
     if (!req.body.product) {
@@ -40,14 +43,14 @@ const createTicket = asyncHanlder(async (req, res) => {
       throw new Error(error);
     }
   }
-
-  console.log(ticket);
-
   res.json(ticket);
 });
 
 // Update Ticket
 const updateTicket = asyncHanlder(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) throw new Error("User not Exist");
+
   let updatedTicket;
   try {
     updatedTicket = await Ticket.findByIdAndUpdate(
@@ -66,6 +69,9 @@ const updateTicket = asyncHanlder(async (req, res) => {
 
 // Delete Ticket
 const deleteTicket = asyncHanlder(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) throw new Error("User not Exist");
+
   await Ticket.deleteOne({
     _id: req.params.id,
   });
@@ -74,6 +80,9 @@ const deleteTicket = asyncHanlder(async (req, res) => {
 
 // Closing the Ticket
 const closeTicket = asyncHanlder(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) throw new Error("User not Exist");
+
   let closedTicket;
   try {
     closedTicket = await Ticket.findByIdAndUpdate(

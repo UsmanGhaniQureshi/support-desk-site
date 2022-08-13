@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { register, reset } from "../store/auth/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { isSuccessFull, isError, message, user } = useSelector(
+  const { isLoading, isSuccessFull, isError, message, user } = useSelector(
     (state) => state.auth
   );
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ const Register = () => {
 
     dispatch(register(formData));
   };
+
+  if (isLoading) return <LoadingSpinner />;
   return (
     <div className="w-3/4 mx-auto">
       <div className="p-4">
