@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const connectToDB = require("./config/db");
 const { errorHandler } = require("./middlewares/errorMiddleWare");
