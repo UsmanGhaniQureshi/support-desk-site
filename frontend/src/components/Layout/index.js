@@ -16,10 +16,12 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   return (
     <div className="w-full md:w-3/5 md:mx-auto">
-      <div className="flex justify-between items-center border-b  py-5">
-        <Link to="/">Support Desk</Link>
+      <div className="flex flex-col md:flex-row gap-3 md:justify-between md:items-center border-b  py-5">
+        <Link className="mx-auto md:mx-0 font-bold" to="/">
+          Support Desk
+        </Link>
         {!user && (
-          <div className="flex items-center space-x-3">
+          <div className="flex p-2 md:p-0 justify-between md:justify-start md:items-center space-x-3">
             <LinkButton
               url="/login"
               linkText="Login"
