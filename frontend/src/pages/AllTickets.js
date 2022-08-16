@@ -20,15 +20,17 @@ const AllTickets = () => {
   }, [user, isSuccessFull, navigate, dispatch]);
   if (isLoading) return <LoadingSpinner />;
   return (
-    <div>
+    <div className="p-3 space-y-4 ">
       <button
         onClick={() => navigate("/")}
-        className="flex gap-2 mt-8 border-black items-center border px-5 font-bold py-1 text-sm rounded-md"
+        className="flex gap-2  text-xs border-black items-center border px-5 font-bold py-1 md:text-sm rounded-md"
       >
         <FaArrowLeft />
         <span>Back</span>
       </button>
-      <h1 className="text-3xl text-slate-900 text-center font-bold">Tickets</h1>
+      <h1 className="text-3xl text-slate-900 text-center mt-3 font-bold">
+        Tickets
+      </h1>
       {tickets.length > 0 ? (
         <table className="min-w-full mt-3 border text-center">
           <thead className="border-b bg-zinc-300 ">

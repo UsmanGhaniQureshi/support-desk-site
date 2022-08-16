@@ -51,19 +51,19 @@ const Register = () => {
 
   if (isLoading) return <LoadingSpinner />;
   return (
-    <div className="w-3/4 mx-auto">
+    <div className="w-4/5 md:w-3/4 mx-auto">
       <div className="p-4">
-        <h1 className="flex items-center justify-center text-4xl font-bold">
+        <h1 className="flex items-center justify-center text-xl md:text-4xl font-bold">
           <FaUser className="mx-2" />
           Register
         </h1>
-        <p className="text-2xl text-zinc-500  text-center mt-3  font-extrabold ">
+        <p className="text-lg md:text-2xl text-zinc-500   text-center mt-3  font-bold md:font-extrabold ">
           Please Create An Account
         </p>
       </div>
       <form
         onSubmit={submitHandler}
-        className="flex flex-col gap-5 w-4/5 mx-auto"
+        className="flex w-4/5 flex-col  gap-5 md:w-4/5 mx-auto"
       >
         <input
           ref={emailRef}

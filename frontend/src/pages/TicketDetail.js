@@ -49,7 +49,7 @@ const TicketDetail = () => {
 
   if (!ticket || notes.length < 0) return <LoadingSpinner />;
   return (
-    <div>
+    <div className="p-2 text-xs md:text-base">
       <button
         onClick={() => navigate("/tickets")}
         className="flex gap-2 mt-8 border-black items-center border px-5 font-bold py-1 text-sm rounded-md"
@@ -59,13 +59,7 @@ const TicketDetail = () => {
       </button>
       <div className="mt-4 font-bold">
         <p>Ticket ID :{ticket._id}</p>
-        <p>
-          Date Submited :
-          {" " +
-            new Date(ticket.createdAt).toLocaleDateString() +
-            " " +
-            new Date(ticket.createdAt).toLocaleTimeString()}
-        </p>
+        <p>Date Submited :{new Date(ticket.createdAt).toLocaleString()}</p>
         <p>Product : {ticket.product}</p>
         <div className="w-full border mt-2 border-slate-800" />
       </div>

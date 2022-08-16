@@ -40,7 +40,7 @@ const CreateTicket = () => {
 
   if (isLoading) return <p>Loading...</p>;
   return (
-    <>
+    <div className="p-2">
       <button
         onClick={() => navigate("/")}
         className="flex gap-2 mt-8 border-black items-center border px-5 font-bold py-1 text-sm rounded-md"
@@ -49,7 +49,7 @@ const CreateTicket = () => {
         <span>Back</span>
       </button>
 
-      <div className="w-3/4 mx-auto">
+      <div className="w-full md:w-3/4 mx-auto">
         <div className="p-4">
           <h1 className="flex items-center justify-center text-4xl font-bold">
             Create New Ticket
@@ -108,7 +108,7 @@ const CreateTicket = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

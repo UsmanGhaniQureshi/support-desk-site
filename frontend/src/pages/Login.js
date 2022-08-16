@@ -44,7 +44,7 @@ const Login = () => {
 
   if (isLoading) return <LoadingSpinner />;
   return (
-    <div className=" w-4/5 md:w-3/4 mx-auto">
+    <div className="w-4/5 md:w-3/4 mx-auto">
       <div className="p-4 mt-5">
         <h1 className="flex items-center justify-center text-xl md:text-4xl font-bold">
           <FaSignInAlt className="mx-2" />
